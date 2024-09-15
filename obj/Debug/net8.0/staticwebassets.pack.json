@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Rick\\source\\repos\\ProjetoKatuak\\ProjetoKatuak\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\ProjetoKatuak.bundle.scp.css",
+      "PackagePath": "staticwebassets\\ProjetoKatuak.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\Rick\\source\\repos\\ProjetoKatuak\\ProjetoKatuak\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\Rick\\source\\repos\\ProjetoKatuak\\ProjetoKatuak\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Rick\\source\\repos\\ProjetoKatuak\\ProjetoKatuak\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Rick\\source\\repos\\ProjetoKatuak\\ProjetoKatuak\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.ProjetoKatuak.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.ProjetoKatuak.props",
+      "PackagePath": "build\\ProjetoKatuak.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.ProjetoKatuak.props",
+      "PackagePath": "buildMultiTargeting\\ProjetoKatuak.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.ProjetoKatuak.props",
+      "PackagePath": "buildTransitive\\ProjetoKatuak.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

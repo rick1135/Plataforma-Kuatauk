@@ -1,0 +1,65 @@
+﻿@page "/adicionar-exercicio"
+@using Microsoft.AspNetCore.Components.Forms
+@inject NavigationManager Navigation
+@inject AppDbContext DbContext
+@rendermode InteractiveServer
+@using ProjetoKatuak.Models
+@using ProjetoKatuak.Data
+
+<div class="add-exercise-page">
+    <div class="exercise-form">
+        <EditForm Model="@novoExercicio" FormName="addExerciseForm">
+            <h1 class="pangolin-regular">Adicionar Exercício</h1>
+
+            <div>
+                <label for="titulo" class="pangolin-regular">Título</label>
+                <InputText id="titulo" @bind-Value="novoExercicio.Titulo" placeholder="Digite o título do exercício" class="input" />
+            </div>
+
+            <div>
+                <label for="descricao" class="pangolin-regular">Descrição</label>
+                <InputTextArea id="descricao" @bind-Value="novoExercicio.Descricao" placeholder="Digite a descrição do exercício" class="input" />
+            </div>
+
+            <div>
+                <label for="solucao" class="pangolin-regular">Solução</label>
+                <InputTextArea id="solucao" @bind-Value="novoExercicio.Solucao" placeholder="Digite a solução do exercício" class="input" />
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn-register" @onclick="HandleValidSubmit">Adicionar</button>
+                <a class="loginfo" href="/exercicios">Cancelar</a>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private Exercicio novoExercicio = new Exercicio();
+
+    private async Task HandleValidSubmit()
+    {
+        Console.WriteLine($"Título preenchido: {novoExercicio.Titulo}");
+        Console.WriteLine($"Descrição preenchida: {novoExercicio.Descricao}");
+        Console.WriteLine($"Solução preenchida: {novoExercicio.Solucao}");
+
+        if (!string.IsNullOrEmpty(novoExercicio.Titulo) && !string.IsNullOrEmpty(novoExercicio.Descricao) && !string.IsNullOrEmpty(novoExercicio.Solucao))
+        {
+            try
+            {
+                DbContext.Exercicios.Add(novoExercicio);
+                await DbContext.SaveChangesAsync();
+
+                Navigation.NavigateTo("/exercicios");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao adicionar o exercício: {ex.Message}");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Todos os campos devem ser preenchidos.");
+        }
+    }
+}

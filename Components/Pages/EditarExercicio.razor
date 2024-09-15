@@ -1,0 +1,118 @@
+﻿@page "/editar-exercicio/{id:int}"
+@using Microsoft.EntityFrameworkCore
+@using ProjetoKatuak.Data
+@using ProjetoKatuak.Models
+@rendermode InteractiveServer
+@inject StateContainer State
+@inject AppDbContext DbContext
+@inject NavigationManager Navigation
+
+<h3>Editar Exercício</h3>
+
+@if (exercicio == null)
+{
+    <p><em>Carregando...</em></p>
+}
+else
+{
+    <div>
+        <label for="titulo">Título</label>
+        <InputText id="titulo" @bind-Value="exercicio.Titulo" class="input" />
+    </div>
+    <div>
+        <label for="descricao">Descrição</label>
+        <InputTextArea id="descricao" @bind-Value="exercicio.Descricao" class="input" />
+    </div>
+    <div>
+        <label for="solucao">Solução</label>
+        <InputTextArea id="solucao" @bind-Value="exercicio.Solucao" class="input" />
+    </div>
+
+    <div class="button-group">
+        <button type="button" class="btn-save" @onclick="SalvarExercicio">Salvar</button>
+        <button type="button" class="btn-delete" @onclick="DeletarExercicio">Deletar</button>
+        <a href="/exercicios" class="btn-cancel">Cancelar</a>
+    </div>
+}
+
+@code {
+    [Parameter] public int id { get; set; }
+    private Exercicio exercicio;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine($"Carregando exercício com ID {id}");
+        exercicio = await DbContext.Exercicios.FindAsync(id);
+
+        if (exercicio == null)
+        {
+            Console.WriteLine("Exercício não encontrado");
+            Navigation.NavigateTo("/exercicios");
+        }
+        else
+        {
+            EditExercicio(exercicio);
+        }
+    }
+
+
+    private void EditExercicio(Exercicio exercicio)
+    {
+        State.EditExercicio = exercicio;
+        State.NotifyStateChanged();
+    }
+
+
+    private async Task SalvarExercicio()
+    {
+        try
+        {
+            var exercOld = await DbContext.Exercicios.FindAsync(State.EditExercicio.Id);
+            if (exercOld != null)
+            {
+                exercOld.Titulo = State.EditExercicio.Titulo;
+                exercOld.Descricao = State.EditExercicio.Descricao;
+                exercOld.Solucao = State.EditExercicio.Solucao;
+                DbContext.Exercicios.Update(exercOld);
+                await DbContext.SaveChangesAsync();
+                Console.WriteLine("Exercício salvo com sucesso");
+                Navigation.NavigateTo("/exercicios");
+            }
+            else
+            {
+                Console.WriteLine("Exercício não encontrado para atualização");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao salvar o exercício: {ex.Message}");
+        }
+    }
+
+
+    private async Task DeletarExercicio()
+    {
+        Console.WriteLine("Método DeletarExercicio foi chamado");
+
+        try
+        {
+            var exercicioToDelete = await DbContext.Exercicios.FindAsync(State.EditExercicio.Id);
+            if (exercicioToDelete != null)
+            {
+                DbContext.Exercicios.Remove(exercicioToDelete);
+                await DbContext.SaveChangesAsync();
+                Console.WriteLine("Exercício deletado com sucesso");
+                Navigation.NavigateTo("/exercicios");
+            }
+            else
+            {
+                Console.WriteLine("Exercício não encontrado para exclusão");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao deletar o exercício: {ex.Message}");
+        }
+    }
+
+}

@@ -1,0 +1,42 @@
+﻿@page "/exercicios"
+@using Microsoft.EntityFrameworkCore
+@using ProjetoKatuak.Data
+@using ProjetoKatuak.Models
+@inject AppDbContext DbContext
+
+<h3>Lista de Exercícios</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Descrição</th>
+            <th>Solução</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var exercicio in exercicios)
+        {
+            <tr>
+                <td>@exercicio.Titulo</td>
+                <td>@exercicio.Descricao</td>
+                <td>@exercicio.Solucao</td>
+                <td>
+                    <NavLink class="btn btn-primary" href="@($"/editar-exercicio/{exercicio.Id}")">Editar</NavLink>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<NavLink class="btn btn-success" href="/adicionar-exercicio">Adicionar Exercício</NavLink>
+
+@code {
+    private List<Exercicio> exercicios = new List<Exercicio>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        exercicios = await DbContext.Exercicios.ToListAsync();
+    }
+}
